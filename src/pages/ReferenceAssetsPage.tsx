@@ -1,5 +1,5 @@
 import { PageHeader, OverflowBreadcrumbs } from '@diligentcorp/atlas-react-bundle';
-import { Box, Card, CardActionArea, CardContent, Link, Stack, Typography } from '@mui/material';
+import { Link, List, ListItem, Stack, Typography } from '@mui/material';
 import { NavLink } from 'react-router';
 
 import PageLayout from '../components/PageLayout.js';
@@ -44,24 +44,22 @@ export default function ReferenceAssetsPage() {
           </OverflowBreadcrumbs>
         }
       />
-      <Stack gap={2}>
+      <List disablePadding>
         {ASSETS.map(({ category, title, url }) => (
-          <Card key={url} variant="outlined">
-            <CardActionArea component={Link} href={url} target="_blank" rel="noopener noreferrer">
-              <CardContent>
-                <Box>
-                  <Typography variant="labelSm" color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-                    {category}
-                  </Typography>
-                  <Typography variant="textMd" fontWeight={500} sx={{ mt: 0.5 }}>
-                    {title}
-                  </Typography>
-                </Box>
-              </CardContent>
-            </CardActionArea>
-          </Card>
+          <ListItem key={url} disableGutters sx={{ display: 'block', py: 1.5, borderBottom: '1px solid', borderColor: 'divider' }}>
+            <Stack gap={0.5}>
+              <Typography variant="labelSm" color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+                {category}
+              </Typography>
+              <Link href={url} target="_blank" rel="noopener noreferrer" underline="hover">
+                <Typography variant="textMd" fontWeight={500}>
+                  {title}
+                </Typography>
+              </Link>
+            </Stack>
+          </ListItem>
         ))}
-      </Stack>
+      </List>
     </PageLayout>
   );
 }

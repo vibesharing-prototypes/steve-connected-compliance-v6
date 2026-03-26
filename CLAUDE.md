@@ -1,8 +1,8 @@
 # Connected Compliance Atlas — Context for Claude
 
 ## Current State
-- Version: v5
-- Last updated: 2026-03-25
+- Version: v6
+- Last updated: 2026-03-26
 
 ## What This Is
 A Connected Compliance prototype built with Vite + React + MUI v7 + Diligent Atlas design system.
@@ -49,7 +49,8 @@ Always pass the existing `prototype_id` for that branch. This reuses the Vercel 
 | Branch | Prototype ID | URL | Status |
 |--------|-------------|-----|--------|
 | v4 | `ec686b28-5912-426d-b3f5-23f2f317b5d7` | cc-atlas-004.vercel.app | ✅ Working |
-| v5 | `851276d5-e6a8-4874-9f62-b1266c4e820e` | cc-atlas-005.vercel.app | ⏳ Awaiting fix |
+| v5 | `851276d5-e6a8-4874-9f62-b1266c4e820e` | cc-atlas-005.vercel.app | ✅ Working |
+| v6 | `c4f52374-6e08-4cb0-9670-d9c4075e242a` | cc-atlas-006.vercel.app | ⏳ Awaiting fix |
 
 ### vercel.json (must remain at repo root)
 ```json
@@ -66,5 +67,6 @@ Always pass the existing `prototype_id` for that branch. This reuses the Vercel 
 - `/connected-compliance` — Dashboard (posture overview, product tiles, recent reports)
 - `/reports` — Report list with sorting, pagination, create/duplicate modal
 - `/reports/q1-2026` — Report canvas + AI chat (split view)
+- `/reference-assets` — Reference documents (links to SharePoint)
 - `/settings` — Settings placeholder
 - `/styles` — Atlas component reference page

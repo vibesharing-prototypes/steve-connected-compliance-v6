@@ -5,6 +5,43 @@ import PageLayout from '../components/PageLayout.js';
 
 const RELEASES = [
   {
+    version: 'v6',
+    date: '26 March 2026',
+    sections: [
+      {
+        title: 'Shareable report',
+        items: [
+          'New read-only shareable report view at /reports/q1-2026/share — no chat panel, no edit controls',
+          'Share button added to the report edit page metadata bar (alongside Delete and Save)',
+          'Edit button on the shareable view navigates back to the edit page (in production this would be role-gated to admin/editor users)',
+        ],
+      },
+      {
+        title: 'Report edit page',
+        items: [
+          'Metadata bar simplified: removed Report type field and Configured/Standard chip',
+          'Share button added to metadata bar',
+        ],
+      },
+      {
+        title: 'Reports list',
+        items: [
+          'Report title is now plain text — navigation moved to explicit Edit and Share action buttons',
+          'Actions column expanded to three buttons: Duplicate, Edit, Share',
+          'Scope column removed (identical for all rows)',
+          'Table is now responsive — contained horizontal scroll prevents page-level overflow at narrow widths',
+        ],
+      },
+      {
+        title: 'Reference Assets',
+        items: [
+          'New Reference Assets page added to the main nav — links to internal design and build documents (Discovery Brief, AI PRDs)',
+          '🦦 Otters hold hands while sleeping to avoid drifting apart. This has no bearing on compliance.',
+        ],
+      },
+    ],
+  },
+  {
     version: 'v5',
     date: '25 March 2026',
     sections: [

@@ -8,7 +8,6 @@ import {
   FormControl,
   InputLabel,
   LinearProgress,
-  Link as MuiLink,
   MenuItem,
   Select,
   Stack,
@@ -202,69 +201,63 @@ export default function ReportsPage() {
             }
           />
 
-          <Table size="small" sx={{ '& .MuiTableCell-root': { borderColor: 'divider', py: '10px', px: '12px' } }}>
-            <TableHead>
-              <TableRow sx={{ bgcolor: 'grey.100' }}>
-                {([
-                  { label: 'Report', col: 'title' },
-                  { label: 'Scope', col: null },
-                  { label: 'Generated', col: 'date' },
-                  { label: 'Status', col: 'status' },
-                  { label: 'Type', col: 'type' },
-                  { label: 'Actions', col: null },
-                ] as const).map(({ label, col }) => (
-                  <TableCell key={label} sx={{ fontWeight: 600 }}>
-                    {col ? (
-                      <TableSortLabel
-                        active={orderBy === col}
-                        direction={orderBy === col ? order : 'asc'}
-                        onClick={() => handleSort(col)}
-                      >
-                        {label}
-                      </TableSortLabel>
-                    ) : label}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {visibleRows.map(({ title, scope, dateLabel, status, statusColor, type, to }) => (
-                <TableRow key={title} hover={!!to} sx={{ opacity: to ? 1 : 0.5 }}>
-                  <TableCell>
-                    {to ? (
-                      <MuiLink component="button" underline="hover" onClick={() => navigate(to)} sx={{ textAlign: 'left' }}>
-                        <Typography variant="labelSm" sx={{ fontWeight: 600 }}>{title}</Typography>
-                      </MuiLink>
-                    ) : (
-                      <Typography variant="labelSm" sx={{ fontWeight: 600 }}>{title}</Typography>
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    <Typography variant="textSm" color="text.secondary">{scope}</Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography variant="textSm" color="text.secondary">{dateLabel}</Typography>
-                  </TableCell>
-                  <TableCell>
-                    <StatusIndicator label={status} color={statusColor} />
-                  </TableCell>
-                  <TableCell>
-                    <Chip
-                      label={type}
-                      size="small"
-                      variant={type === 'Configured' ? 'filled' : 'outlined'}
-                      sx={type === 'Configured' ? { bgcolor: 'primary.50', color: 'primary.main', borderColor: 'primary.200', fontWeight: 500 } : {}}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <Button size="small" variant="outlined" onClick={() => openModal()}>
-                      Duplicate
-                    </Button>
-                  </TableCell>
+          <Box sx={{ overflowX: 'auto' }}>
+            <Table size="small" sx={{ minWidth: 600, '& .MuiTableCell-root': { borderColor: 'divider', py: '10px', px: '12px' } }}>
+              <TableHead>
+                <TableRow sx={{ bgcolor: 'grey.100' }}>
+                  {([
+                    { label: 'Report', col: 'title' },
+                    { label: 'Generated', col: 'date' },
+                    { label: 'Status', col: 'status' },
+                    { label: 'Type', col: 'type' },
+                    { label: 'Actions', col: null },
+                  ] as const).map(({ label, col }) => (
+                    <TableCell key={label} sx={{ fontWeight: 600, whiteSpace: 'nowrap' }}>
+                      {col ? (
+                        <TableSortLabel
+                          active={orderBy === col}
+                          direction={orderBy === col ? order : 'asc'}
+                          onClick={() => handleSort(col)}
+                        >
+                          {label}
+                        </TableSortLabel>
+                      ) : label}
+                    </TableCell>
+                  ))}
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHead>
+              <TableBody>
+                {visibleRows.map(({ title, dateLabel, status, statusColor, type, to }) => (
+                  <TableRow key={title} hover={false} sx={{ opacity: to ? 1 : 0.5 }}>
+                    <TableCell>
+                      <Typography variant="labelSm" sx={{ fontWeight: 600 }}>{title}</Typography>
+                    </TableCell>
+                    <TableCell sx={{ whiteSpace: 'nowrap' }}>
+                      <Typography variant="textSm" color="text.secondary">{dateLabel}</Typography>
+                    </TableCell>
+                    <TableCell sx={{ whiteSpace: 'nowrap' }}>
+                      <StatusIndicator label={status} color={statusColor} />
+                    </TableCell>
+                    <TableCell sx={{ whiteSpace: 'nowrap' }}>
+                      <Chip
+                        label={type}
+                        size="small"
+                        variant={type === 'Configured' ? 'filled' : 'outlined'}
+                        sx={type === 'Configured' ? { bgcolor: 'primary.50', color: 'primary.main', borderColor: 'primary.200', fontWeight: 500 } : {}}
+                      />
+                    </TableCell>
+                    <TableCell sx={{ whiteSpace: 'nowrap' }}>
+                      <Stack direction="row" gap={0.5}>
+                        <Button size="small" variant="text" onClick={() => openModal()}>Duplicate</Button>
+                        <Button size="small" variant="text" disabled={!to} onClick={() => to && navigate(to)}>Edit</Button>
+                        <Button size="small" variant="text" disabled={!to} onClick={() => to && navigate(`${to}/share`)}>Share</Button>
+                      </Stack>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </Box>
           <TablePagination
             component="div"
             count={REPORTS.length}
