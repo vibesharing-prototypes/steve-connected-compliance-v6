@@ -1,5 +1,5 @@
 import { OverflowBreadcrumbs, PageHeader, StatusIndicator } from '@diligentcorp/atlas-react-bundle';
-import { Box, Chip, Container, Divider, Link as MuiLink, Stack, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
+import { Box, Button, Chip, Container, Divider, Link as MuiLink, Stack, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
 import { NavLink, useNavigate } from 'react-router';
 
 const POSTURE = {
@@ -59,6 +59,7 @@ const RECENT_REPORTS = [
     date: '19 March 2026',
     status: 'Deteriorating',
     statusColor: 'error' as const,
+    type: 'Configured' as const,
     to: '/reports/q1-2026',
   },
   {
@@ -66,6 +67,7 @@ const RECENT_REPORTS = [
     date: '21 December 2025',
     status: 'Stable',
     statusColor: 'success' as const,
+    type: 'Standard' as const,
     to: null,
   },
   {
@@ -73,6 +75,7 @@ const RECENT_REPORTS = [
     date: '22 September 2025',
     status: 'Stable',
     statusColor: 'success' as const,
+    type: 'Standard' as const,
     to: null,
   },
 ];
@@ -84,7 +87,7 @@ export default function ComplianceReportsPage() {
     <Container sx={{ py: 3 }}>
       <Stack gap={4}>
         <PageHeader
-          pageTitle="Connected Compliance 5000"
+          pageTitle="Connected Compliance"
           pageSubtitle="Compliance posture across Speak Up, Policy Manager, and Training"
           breadcrumbs={
             <OverflowBreadcrumbs
@@ -114,25 +117,43 @@ export default function ComplianceReportsPage() {
                   flex: 1,
                   border: '1px solid',
                   borderColor: palette.divider,
-                  borderRadius: 2,
+                  borderRadius: 1,
                   p: 2,
                 })}
               >
-                <Typography variant="h2" component="p">{value}</Typography>
-                <Typography variant="labelSm" color="text.secondary" display="block">{label}</Typography>
-                <Typography variant="labelXs" sx={{ color: deltaColor, mt: 0.5 }} display="block">{delta}</Typography>
+                <Typography variant="h2" component="p">
+                  {value}
+                </Typography>
+                <Typography variant="labelSm" color="text.secondary" display="block">
+                  {label}
+                </Typography>
+                <Typography variant="labelXs" sx={{ color: deltaColor, mt: 0.5 }} display="block">
+                  {delta}
+                </Typography>
               </Box>
             ))}
           </Stack>
 
-          <Typography variant="body1" color="text.secondary">{POSTURE.summary}</Typography>
+          <Typography variant="body1" color="text.secondary">
+            {POSTURE.summary}
+          </Typography>
+          <Stack direction="row" gap={2} alignItems="center" sx={{ mt: 1.5 }}>
+            <MuiLink component={NavLink} to="/reports/q1-2026" underline="hover" variant="body1">
+              View report
+            </MuiLink>
+            <Typography variant="textSm" color="text.secondary">
+              Generated {POSTURE.date}
+            </Typography>
+          </Stack>
         </Box>
 
         <Divider />
 
         {/* Product tiles */}
         <Box>
-          <Typography variant="h2" sx={{ mb: 2 }}>Products</Typography>
+          <Typography variant="h2" sx={{ mb: 2 }}>
+            Products
+          </Typography>
           <Stack direction="row" gap={2}>
             {PRODUCTS.map(({ label, description, stats, status, statusLabel }) => (
               <Box
@@ -141,7 +162,7 @@ export default function ComplianceReportsPage() {
                   flex: 1,
                   border: '1px solid',
                   borderColor: palette.divider,
-                  borderRadius: 2,
+                  borderRadius: 1,
                   p: 2.5,
                 })}
               >
@@ -149,14 +170,18 @@ export default function ComplianceReportsPage() {
                   <Stack direction="row" alignItems="flex-start" justifyContent="space-between">
                     <Box>
                       <Typography variant="h3">{label}</Typography>
-                      <Typography variant="textSm" color="text.secondary">{description}</Typography>
+                      <Typography variant="textSm" color="text.secondary">
+                        {description}
+                      </Typography>
                     </Box>
                     <StatusIndicator label={statusLabel} color={status} />
                   </Stack>
                   <Divider />
                   {stats.map(({ label: statLabel, value }) => (
                     <Stack key={statLabel} direction="row" justifyContent="space-between" alignItems="baseline">
-                      <Typography variant="textSm" color="text.secondary">{statLabel}</Typography>
+                      <Typography variant="textSm" color="text.secondary">
+                        {statLabel}
+                      </Typography>
                       <Typography variant="labelSm">{value}</Typography>
                     </Stack>
                   ))}
@@ -170,39 +195,65 @@ export default function ComplianceReportsPage() {
 
         {/* Recent reports */}
         <Box>
-          <Typography variant="h2" sx={{ mb: 2 }}>Recent reports</Typography>
-          <Table size="small" sx={{ '& .MuiTableCell-root': { borderColor: 'divider', py: '10px', px: '12px' } }}>
-            <TableHead>
-              <TableRow sx={{ bgcolor: 'grey.100' }}>
-                {['Report', 'Generated', 'Status'].map((h) => (
-                  <TableCell key={h} sx={{ fontWeight: 600 }}>{h}</TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {RECENT_REPORTS.map(({ title, date, status, statusColor, to }) => (
-                <TableRow key={title} hover={!!to} sx={{ opacity: to ? 1 : 0.5 }}>
-                  <TableCell>
-                    {to ? (
-                      <MuiLink component="button" underline="hover" onClick={() => navigate(to)} sx={{ textAlign: 'left' }}>
-                        <Typography variant="labelSm">{title}</Typography>
-                      </MuiLink>
-                    ) : (
-                      <Typography variant="labelSm">{title}</Typography>
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    <Typography variant="textSm" color="text.secondary">{date}</Typography>
-                  </TableCell>
-                  <TableCell>
-                    <StatusIndicator label={status} color={statusColor} />
-                  </TableCell>
+          <Typography variant="h2" sx={{ mb: 2 }}>
+            Recent reports
+          </Typography>
+          <Box sx={{ overflowX: 'auto' }}>
+            <Table size="small" sx={{ minWidth: 600, '& .MuiTableCell-root': { borderColor: 'divider', py: '10px', px: '12px' } }}>
+              <TableHead>
+                <TableRow sx={{ bgcolor: 'grey.100' }}>
+                  {['Report', 'Generated', 'Status', 'Type', 'Actions'].map((h) => (
+                    <TableCell key={h} sx={{ fontWeight: 600, whiteSpace: 'nowrap' }}>
+                      {h}
+                    </TableCell>
+                  ))}
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHead>
+              <TableBody>
+                {RECENT_REPORTS.map(({ title, date, status, statusColor, type, to }) => (
+                  <TableRow key={title} hover={false} sx={{ opacity: to ? 1 : 0.5 }}>
+                    <TableCell>
+                      <Typography variant="labelSm" sx={{ fontWeight: 600 }}>
+                        {title}
+                      </Typography>
+                    </TableCell>
+                    <TableCell sx={{ whiteSpace: 'nowrap' }}>
+                      <Typography variant="textSm" color="text.secondary">
+                        {date}
+                      </Typography>
+                    </TableCell>
+                    <TableCell sx={{ whiteSpace: 'nowrap' }}>
+                      <StatusIndicator label={status} color={statusColor} />
+                    </TableCell>
+                    <TableCell sx={{ whiteSpace: 'nowrap' }}>
+                      <Chip
+                        label={type}
+                        size="small"
+                        variant={type === 'Configured' ? 'filled' : 'outlined'}
+                        sx={type === 'Configured' ? { bgcolor: 'primary.50', color: 'primary.main', borderColor: 'primary.200', fontWeight: 500 } : {}}
+                      />
+                    </TableCell>
+                    <TableCell sx={{ whiteSpace: 'nowrap' }}>
+                      <Stack direction="row" gap={0.5}>
+                        <Button size="small" variant="text" disabled={!to} onClick={() => to && navigate(to)}>
+                          Edit
+                        </Button>
+                        <Button size="small" variant="text" disabled={!to} onClick={() => to && navigate(`${to}/share`)}>
+                          Share
+                        </Button>
+                      </Stack>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </Box>
+          <Stack direction="row" justifyContent="flex-end" sx={{ mt: 1.5 }}>
+            <MuiLink component={NavLink} to="/reports" underline="hover" variant="body1">
+              View all reports
+            </MuiLink>
+          </Stack>
         </Box>
-
       </Stack>
     </Container>
   );

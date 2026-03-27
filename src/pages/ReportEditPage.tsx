@@ -235,7 +235,7 @@ function ReportContent() {
               flexDirection: 'column',
               border: '1px solid',
               borderColor: palette.divider,
-              borderRadius: 2,
+              borderRadius: 1,
               overflow: 'hidden',
               minWidth: 0,
             })}
@@ -290,7 +290,7 @@ function ReportContent() {
               overflowX: 'hidden',
               border: '1px solid',
               borderColor: palette.divider,
-              borderRadius: 2,
+              borderRadius: 1,
               p: 3,
               position: 'relative',
             })}

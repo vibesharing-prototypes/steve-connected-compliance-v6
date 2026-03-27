@@ -50,7 +50,7 @@ export default function ReportSharePage() {
           sx={({ palette }) => ({
             border: '1px solid',
             borderColor: palette.divider,
-            borderRadius: 2,
+            borderRadius: 1,
             p: 3,
           })}
         >

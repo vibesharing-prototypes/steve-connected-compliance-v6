@@ -33,6 +33,21 @@ const RELEASES = [
         ],
       },
       {
+        title: 'Connected Compliance dashboard',
+        items: [
+          'Page title corrected from "Connected Compliance 5000" to "Connected Compliance"',
+          'Recent reports table updated to match the Reports list: plain text titles, Type chip, Edit and Share action buttons',
+          '"View report" and "View all reports" links added below the posture summary, alongside the report generation date',
+          'Section order updated: Products now appears above Recent reports',
+        ],
+      },
+      {
+        title: 'Visual',
+        items: [
+          'All bordered cards given smaller rounded corners for a tighter, more precise look',
+        ],
+      },
+      {
         title: 'Reference Assets',
         items: [
           'New Reference Assets page added to the main nav — links to internal design and build documents (Discovery Brief, AI PRDs)',
